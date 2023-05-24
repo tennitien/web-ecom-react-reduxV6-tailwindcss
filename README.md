@@ -10,7 +10,7 @@
 - [yup]()
 - [formik]()
 
-## Deploy to https://app.netlify.com
+## Deploy https://app.netlify.com
 
 ### After Deploy
 
