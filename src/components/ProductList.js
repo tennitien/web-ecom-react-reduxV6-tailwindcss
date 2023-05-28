@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useRouteLoaderData } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProductItem from './ProductItem';
 
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
 const ProductList = () => {
-  // get data from redux
-  const categories = useSelector(state => state.productList.categories);
-  // get data from API
-  const dataRoot = useRouteLoaderData('root');
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    setProducts(dataRoot);
-  }, [dataRoot]);
+  const productsFilter = useSelector(state => state.productList.productFilter);
 
-  let productsFilter;
-  if (categories === 'all') {
-    productsFilter = products;
-  } else {
-    productsFilter = products.filter(
-      item => item.category.toLowerCase() === categories.toLowerCase()
-    );
-  }
   const getItemOnClick = product => {};
   return (
     <section>

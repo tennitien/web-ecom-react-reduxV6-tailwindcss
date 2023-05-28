@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ProductItem from './ProductItem';
 import { popupActions } from '../store/popupSlice';
-import { useDispatch } from 'react-redux';
-import { useRouteLoaderData } from 'react-router';
-
+import { useDispatch, useSelector } from 'react-redux';
 const Products = () => {
-  // get data from API
-  const dataRoot = useRouteLoaderData('root');
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    // Chỉ hiển thị tối đa 8 phần tử đầu tiên của danh sách trả về từ API.
-    setProducts(dataRoot.slice(0, 8));
-  }, [dataRoot]);
-
+  const products = useSelector(state => state.productList.productList);
   // add action and value to  popupSlice >> open Popup
   const dispatch = useDispatch();
   const getItemOnClick = product => {

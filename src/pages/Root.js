@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
 import { Navbar, Footer, LiveChat } from '../components';
-import { Outlet, json } from 'react-router';
+import { Outlet, json, useLoaderData } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../store/cartSlice';
+import { productListActions } from '../store/productListSlice';
 
 const Root = () => {
   const dispatch = useDispatch();
+  const data = useLoaderData();
   useEffect(() => {
     dispatch(cartActions.GET_CART());
+    dispatch(productListActions.setProduct(data));
   }, []);
   return (
     <>
