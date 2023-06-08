@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import style from '../style';
 import { FaShoppingCart, FaUserAlt, FaCaretDown, FaBars } from 'react-icons/fa';
-import { loginActions } from '../store/loginSlice';
+import { loginActions, loginSelector } from '../store/loginSlice';
 import ListCart from './ListCart';
 
 const Navbar = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const tokenStore = JSON.parse(localStorage.getItem('token'));
-  const login = user && tokenStore ? true : false;
+  // get tu slice
+
+  const login = useSelector(loginSelector.isLogin);
+  console.log(login);
+  const username = login
+    ? JSON.parse(localStorage.getItem('username'))
+    : 'Login';
   let number = useSelector(state => state.cart.numberCart);
 
   // const links = [
@@ -58,7 +62,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutHandler = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('username');
     localStorage.removeItem('listCart');
     localStorage.removeItem('token');
     dispatch(loginActions.ON_LOGOUT);
@@ -92,7 +96,7 @@ const Navbar = () => {
   //   isOpenNavbar ? '' : 'hidden'
   // }`;
   // Responsive for Navbar --end--
-  const nameWeb = 'boutique';
+  const nameWeb = 'Boutique';
   const homeLink = (
     <li className={`${style.flexCenter} gap-2`}>
       <NavLink
@@ -120,7 +124,7 @@ const Navbar = () => {
           <FaShoppingCart />
           <span
             className={`absolute top-0 right-0 -translate-y-4 translate-x-4  px-2 bg-neutral-700 text-white text-sm rounded-full ${
-              user ? '' : 'hidden'
+              login ? '' : 'hidden'
             }`}
           >
             {number ? number : 0}
@@ -167,7 +171,7 @@ const Navbar = () => {
         to='/register'
         className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
       >
-        {login ? user : 'Login'}
+        {username}
       </NavLink>
     </li>
   );

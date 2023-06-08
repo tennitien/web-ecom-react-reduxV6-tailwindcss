@@ -1,6 +1,6 @@
-import React from 'react';
 import SignUpForm from '../components/SignUpForm';
 import ImgBg from '../UI/ImgBg';
+
 const RegisterPage = () => {
   return (
     <>
@@ -8,6 +8,8 @@ const RegisterPage = () => {
         <ImgBg>
           <SignUpForm />
         </ImgBg>
+
+        {/*  */}
       </section>
     </>
   );

@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import ProductItem from './ProductItem';
 
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from 'react-icons/fa';
+import { productListSelector } from '../store/productListSlice';
 const ProductList = () => {
-  const productsFilter = useSelector(state => state.productList.productFilter);
-
+  const productsFilter = useSelector(productListSelector.productFilter);
   const getItemOnClick = product => {};
   return (
     <section>
@@ -21,7 +21,7 @@ const ProductList = () => {
           <p>No found product</p>
         )}
       </div>
-      {/*  */}
+      {/* pagination  */}
       <div className=' flex items-end flex-col gap-2'>
         <div className='btn-group'>
           <button className='btn btn-outline'>

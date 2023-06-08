@@ -2,8 +2,9 @@ import React from 'react';
 import ProductItem from './ProductItem';
 import { popupActions } from '../store/popupSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { productListSelector } from '../store/productListSlice';
 const Products = () => {
-  const products = useSelector(state => state.productList.productList);
+  const products = useSelector(productListSelector.productList);
   // add action and value to  popupSlice >> open Popup
   const dispatch = useDispatch();
   const getItemOnClick = product => {
@@ -17,13 +18,14 @@ const Products = () => {
           <h2>top trending products</h2>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4'>
-          {products.map((product, i) => (
-            <ProductItem
-              key={i}
-              product={product}
-              getItemOnClick={getItemOnClick}
-            />
-          ))}
+          {products.length &&
+            products.map((product, i) => (
+              <ProductItem
+                key={i}
+                product={product}
+                getItemOnClick={getItemOnClick}
+              />
+            ))}
         </div>
       </section>
     </>

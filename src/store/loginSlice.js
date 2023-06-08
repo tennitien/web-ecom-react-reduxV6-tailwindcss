@@ -1,29 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
-export const initialState = {
+//* get localStorage set isLogin
+const initialState = {
   isLogin: false,
-  userArr: [],
 };
 const loginSlice = createSlice({
-  name: 'popup',
+  name: 'login',
   initialState,
   reducers: {
     // dang nhap
-    ON_LOGIN(state, action) {
-      // save localStorage user
-      localStorage.setItem('user', JSON.stringify(action.payload));
-
+    ON_LOGIN(state) {
       state.isLogin = true;
+      console.log('sliceL:', state.isLogin);
     },
     ON_LOGOUT(state) {
       state.isLogin = false;
-    },
-    SIGN_UP(state, action) {
-      state.userArr = [...state.userArr, action.payload];
     },
   },
 });
 
 export const loginActions = loginSlice.actions;
-
+export const loginSelector = {
+  isLogin: state => state.login.isLogin,
+};
 export default loginSlice.reducer;

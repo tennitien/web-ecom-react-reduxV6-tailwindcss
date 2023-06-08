@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-/*
-ADD_CART: Thêm sản phẩm vào giỏ hàng.
-UPDATE_CART: Cập nhật dữ liệu cho sản phẩm.
-DELETE_CART: Xóa một sản phẩm trong giỏ hàng.
-*/
 import { setLocalStorage, getFromStorage } from './setLocalStorage';
 
 export const initialState = {
@@ -80,5 +75,9 @@ const cartSlice = createSlice({
 });
 
 export const cartActions = cartSlice.actions;
-
+export const cartSelector = {
+  listCart: state => state.cart.listCart,
+  numberCart: state => state.cart.numberCart,
+  totalCart: state => state.cart.totalCart,
+};
 export default cartSlice.reducer;

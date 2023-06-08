@@ -4,7 +4,7 @@ import popupReducer from './popupSlice';
 import productsListReducer from './productListSlice';
 import loginReducer from './loginSlice';
 import cartReducer from './cartSlice';
-import dataReducer from './Slice/dataSlice';
+import dataReducer from './dataSlice';
 
 const store = configureStore({
   reducer: {

@@ -3,54 +3,33 @@ import Button from '../UI/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginActions } from '../store/loginSlice';
-import { useDispatch } from 'react-redux';
-import { createUser } from '../auth/auth';
-import { setLocalStorage, getFromStorage } from '../store/setLocalStorage';
+import { checkEmailRegistered, createUser } from '../auth/auth';
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  // get data form localStorage
-  const userArrStore = getFromStorage('userArr') || [];
-  const emailArr = userArrStore.map(item => item.email);
   //   Formik
   const formik = useFormik({
     initialValues: {
-      name: '',
+      user: '',
       email: '',
       password: '',
-      phone: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Required name'),
-      // todo Email sẽ không được trùng với các tài khoản đã có.
-      email: Yup.string()
-        .required('Required email')
-        .email()
-        .test(
-          '',
-          'Email is exit',
-          value => !emailArr.find(item => item === value)
-        ),
+      user: Yup.string().required('Required user'),
+      email: Yup.string().required('Required email').email(),
 
       // todo: Password khi đăng ký phải nhiều hơn 8 ký tự.
       password: Yup.string()
         .required('Required password')
         .min(8, 'Password must be at least 8 characters '),
-
-      phone: Yup.string()
-        .required('Required phone')
-        .min(10, 'Phone must be at least 10'),
     }),
 
-    /*
-    Nếu thông tin người dùng hơp lý, bạn sẽ thêm người dùng đó vào mảng userArr (chứa danh sách toàn bộ người dùng) và lưu lại vào LocalStorage. Sau đó đưa người dùng trở về trang Sign In.
-    */
+    //
     onSubmit: async values => {
-      const userArr = setLocalStorage('userArr', values);
-      await createUser(values.email, values.password);
-      dispatch(loginActions.SIGN_UP(userArr));
+      const checkEmail = await checkEmailRegistered(values.email);
+      console.log(checkEmail);
+      // If Email already exists
+      await createUser(values.user, values.email, values.password);
       navigate('/login');
     },
   });
@@ -66,16 +45,16 @@ const SignUpForm = () => {
         <div className='form-control'>
           <input
             type='text'
-            id='name'
-            name='name'
-            placeholder='Full Name'
+            id='user'
+            name='user'
+            placeholder='User Name'
             className={inputClass}
             onChange={formik.handleChange}
-            value={formik.values.name}
+            value={formik.values.user}
           />
           {/* show error */}
-          {formik.errors.name && (
-            <p className='text-red-500 py-3'> {formik.errors.name} </p>
+          {formik.errors.user && (
+            <p className='text-red-500 py-3'> {formik.errors.user} </p>
           )}
         </div>
         <div className='form-control'>
@@ -110,21 +89,6 @@ const SignUpForm = () => {
           )}
         </div>
 
-        <div className='form-control'>
-          <input
-            type='text'
-            id='phone'
-            name='phone'
-            placeholder='Phone'
-            className={inputClass}
-            onChange={formik.handleChange}
-            value={formik.values.phone}
-          />
-          {/* show error */}
-          {formik.errors.phone && (
-            <p className='text-red-500 py-3'> {formik.errors.phone} </p>
-          )}
-        </div>
         <Button className='w-full mt-4'>Sign up</Button>
         <p className='text-gray-500 italic text-center mt-8'>
           Login?

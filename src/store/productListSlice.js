@@ -32,4 +32,9 @@ const productListSlice = createSlice({
 });
 
 export const productListActions = productListSlice.actions;
+export const productListSelector = {
+  productList: state => state.productList.productList,
+  productFilter: state => state.productList.productFilter,
+  categories: state => state.productList.categories,
+};
 export default productListSlice.reducer;

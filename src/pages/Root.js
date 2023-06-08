@@ -1,23 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar, Footer, LiveChat } from '../components';
 import { Outlet, json, useLoaderData } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/cartSlice';
 import { productListActions } from '../store/productListSlice';
-import { dataSelector, fetchData } from '../store/Slice/dataSlice';
 
 import styles from '../style';
-
+import { loginActions, loginSelector } from '../store/loginSlice';
 const Root = () => {
   const dispatch = useDispatch();
   const data = useLoaderData();
-  const dataPost = useSelector(dataSelector.data);
-  useEffect(() => {
-    dispatch(cartActions.GET_CART());
-    dispatch(productListActions.setProduct(data));
 
-    dispatch(fetchData());
+  const checkStore = () => {
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    return username && token ? true : false;
+  };
+
+  useEffect(() => {
+    dispatch(productListActions.setProduct(data));
+    if (checkStore()) {
+      dispatch(cartActions.GET_CART());
+      dispatch(loginActions.ON_LOGIN);
+      console.log(1463847);
+    }
   }, []);
+
+  //
+  const [user, setUser] = useState(null);
+
   return (
     <>
       <main>

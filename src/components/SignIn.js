@@ -1,28 +1,17 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginActions } from '../store/loginSlice';
 import { loginUser } from '../auth/auth';
-// ------get data form localStorage ------------ //
-const userArr = JSON.parse(localStorage.getItem('userArr')) || [];
-const emailArr = userArr.map(user => user.email);
-// fn to check exist validate : password, name
-function passwordCheck(email) {
-  let find = userArr.find(user => user.email === email);
-  return find?.password;
-}
-function findName(email) {
-  let find = userArr.find(user => user.email === email);
-  return find?.name;
-}
+import { loginActions } from '../store/loginSlice';
+import { cartSelector } from '../store/cartSlice';
 // ------------------ //
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const listCart = useSelector(state => state.cart.listCart);
+  const listCart = useSelector(cartSelector.listCart);
 
   const formik = useFormik({
     initialValues: {
@@ -30,31 +19,19 @@ const SignIn = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      // todo: Email sẽ không được trùng với các tài khoản đã có.
-      email: Yup.string()
-        .required('Required email')
-        .email()
-        .oneOf(emailArr, 'Email not exist'),
+      email: Yup.string().required('Required email').email(),
       password: Yup.string().required('Required'),
     }),
 
     onSubmit: async values => {
-      if (passwordCheck(values.email) === values.password) {
-        /*
-        Bạn cần cập nhật dữ liệu cho State của Component bằng cách sử dụng Redux và viết một Action mới là ON_LOGIN.
-        Bạn cũng cần cập nhật dữ liệu về người dùng hiện lại xuống localStorage để khi vào lại trang Web thì vẫn ở trạng thái đăng nhập.
-        */
-        localStorage.setItem('user', JSON.stringify(findName(values.email)));
-        await loginUser(values.email, values.password);
-        // get value for cart
+      await loginUser(values.email, values.password);
 
-        localStorage.setItem('listCart', JSON.stringify(listCart));
-        dispatch(loginActions.ON_LOGIN);
-        navigate('/');
-      } else {
-        alert('Email or password is incorrect ');
-        formik.resetForm();
-      }
+      // get value for cart
+      localStorage.setItem('listCart', JSON.stringify(listCart));
+      dispatch(loginActions.ON_LOGIN);
+      navigate('/');
+
+      formik.resetForm();
     },
   });
   const inputClass =
