@@ -1,22 +1,29 @@
 import React, { useEffect } from 'react';
 import { Navbar, Footer, LiveChat } from '../components';
 import { Outlet, json, useLoaderData } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/cartSlice';
 import { productListActions } from '../store/productListSlice';
+import { dataSelector, fetchData } from '../store/Slice/dataSlice';
+
+import styles from '../style';
 
 const Root = () => {
   const dispatch = useDispatch();
   const data = useLoaderData();
+  const dataPost = useSelector(dataSelector.data);
   useEffect(() => {
     dispatch(cartActions.GET_CART());
     dispatch(productListActions.setProduct(data));
+
+    dispatch(fetchData());
   }, []);
   return (
     <>
       <main>
         <Navbar />
-        <div className='mt-16'>
+        <div className={`${styles.boxContainer}`}>
+          {/* <div className='mt-16'> */}
           <Outlet />
         </div>
         <LiveChat />

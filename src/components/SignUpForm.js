@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginActions } from '../store/loginSlice';
 import { useDispatch } from 'react-redux';
-
+import { createUser } from '../auth/auth';
 import { setLocalStorage, getFromStorage } from '../store/setLocalStorage';
 
 const SignUpForm = () => {
@@ -47,8 +47,9 @@ const SignUpForm = () => {
     /*
     Nếu thông tin người dùng hơp lý, bạn sẽ thêm người dùng đó vào mảng userArr (chứa danh sách toàn bộ người dùng) và lưu lại vào LocalStorage. Sau đó đưa người dùng trở về trang Sign In.
     */
-    onSubmit: values => {
+    onSubmit: async values => {
       const userArr = setLocalStorage('userArr', values);
+      await createUser(values.email, values.password);
       dispatch(loginActions.SIGN_UP(userArr));
       navigate('/login');
     },

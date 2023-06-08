@@ -8,7 +8,11 @@ const loginSlice = createSlice({
   name: 'popup',
   initialState,
   reducers: {
-    ON_LOGIN(state) {
+    // dang nhap
+    ON_LOGIN(state, action) {
+      // save localStorage user
+      localStorage.setItem('user', JSON.stringify(action.payload));
+
       state.isLogin = true;
     },
     ON_LOGOUT(state) {

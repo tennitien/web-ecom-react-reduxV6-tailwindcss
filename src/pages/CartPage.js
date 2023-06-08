@@ -10,6 +10,8 @@ import { Button, PriceChange, ContainerColumn, TotalBox } from '../UI';
 
 import { RiDeleteBin5Line, RiGiftLine } from 'react-icons/ri';
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
+import ListCart from '../components/ListCart';
+
 // ------------------ ///
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -19,14 +21,14 @@ const CartPage = () => {
   // get state from redux
   const listCart = useSelector(state => state.cart.listCart);
   const totalCart = useSelector(state => state.cart.totalCart);
-
+  console.log(listCart);
   const getQuantity = quantity => {};
 
   return (
     <>
       <section id='cart' className='container italic'>
         <Header title='cart' children='cart' />
-
+        <ListCart />
         {user && (
           <div id='cart'>
             <h3 className='my-4'>SHOPPING CART</h3>

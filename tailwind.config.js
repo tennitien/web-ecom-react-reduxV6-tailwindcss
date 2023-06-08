@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    daisyui: {
+      themes: ['light', 'dark', 'night'],
+    },
     extend: {
       colors: {
         bgPrimary: '#F4F5F9',
