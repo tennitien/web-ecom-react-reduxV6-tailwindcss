@@ -7,7 +7,7 @@ import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import Root from './Root';
 import ShopPage from './ShopPage';
-
+import Setting from './Setting';
 export {
   CartPage,
   CheckoutPage,
@@ -18,4 +18,5 @@ export {
   RegisterPage,
   Root,
   ShopPage,
+  Setting,
 };

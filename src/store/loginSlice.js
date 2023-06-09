@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
 
 //* get localStorage set isLogin
 const initialState = {
   isLogin: false,
+  username: '',
+  email: '',
 };
 const loginSlice = createSlice({
   name: 'login',
@@ -11,11 +12,21 @@ const loginSlice = createSlice({
   reducers: {
     // dang nhap
     ON_LOGIN(state) {
+      let username = JSON.parse(localStorage.getItem('username'));
+      let email = JSON.parse(localStorage.getItem('email'));
       state.isLogin = true;
-      console.log('sliceL:', state.isLogin);
+      state.username = username;
+      state.email = email;
     },
     ON_LOGOUT(state) {
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+      localStorage.removeItem('listCart');
+      localStorage.removeItem('token');
+
       state.isLogin = false;
+      state.username = '';
+      state.email = '';
     },
   },
 });
@@ -23,5 +34,7 @@ const loginSlice = createSlice({
 export const loginActions = loginSlice.actions;
 export const loginSelector = {
   isLogin: state => state.login.isLogin,
+  username: state => state.login.username,
+  email: state => state.login.email,
 };
 export default loginSlice.reducer;

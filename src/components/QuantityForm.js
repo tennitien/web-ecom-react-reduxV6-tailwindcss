@@ -4,33 +4,17 @@ import { cartActions } from '../store/cartSlice';
 import { useDispatch } from 'react-redux';
 
 const InputCount = props => {
+  // get id product
+  const id = props.id;
   const [input, setInput] = useState(parseInt(props.setInput) || 1);
   const dispatch = useDispatch();
-  const id = props.id;
-
   const decrementHandler = () => {
     if (input > 1) {
       setInput(pre => pre - 1);
     }
-    // if (id) {
-    //   dispatch(
-    //     cartActions.UPDATE_CART({
-    //       id: id,
-    //       quantity: input - 1,
-    //     })
-    //   );
-    // }
   };
   const incrementHandler = () => {
     setInput(pre => pre + 1);
-    // if (id) {
-    //   dispatch(
-    //     cartActions.UPDATE_CART({
-    //       id: id,
-    //       quantity: input + 1,
-    //     })
-    //   );
-    // }
   };
 
   //   passing data from child to parent
@@ -47,7 +31,6 @@ const InputCount = props => {
       );
     }
   };
-
   return (
     <>
       <form action='' onSubmit={submitHandler}>

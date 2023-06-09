@@ -1,118 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import style from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import style from '../style';
-import { FaShoppingCart, FaUserAlt, FaCaretDown, FaBars } from 'react-icons/fa';
+import { FaShoppingCart, FaUserAlt, FaBars } from 'react-icons/fa';
 import { loginActions, loginSelector } from '../store/loginSlice';
-import ListCart from './ListCart';
+import ListCartNavbar from './ListCartNavbar';
 
 const Navbar = () => {
-  // get tu slice
-
-  const login = useSelector(loginSelector.isLogin);
-  console.log(login);
-  const username = login
-    ? JSON.parse(localStorage.getItem('username'))
-    : 'Login';
-  let number = useSelector(state => state.cart.numberCart);
-
-  // const links = [
-  //   { id: 0, name: 'Home', path: '/' },
-  //   { id: 1, name: 'Shop', path: '/shop' },
-  //   {
-  //     id: 2,
-  //     name: 'Cart',
-  //     path: login ? '/cart' : '/register',
-  //     numberCart: number,
-  //     icon: <FaShoppingCart />,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: login ? user : 'Login',
-  //     path: '/register',
-  //     icon: <FaUserAlt />,
-  //   },
-  // ];
-
-  // const navLinks = links.map((item, index) => (
-  //   <li className={`${style.flexCenter} gap-2`} key={index}>
-  //     <div className='relative gap-2 '>
-  //       {item.icon}
-  //       {item.numberCart && (
-  //         <span
-  //           className={`absolute top-0 right-0 -translate-y-4 translate-x-4  px-2 bg-neutral-700 text-white text-sm rounded-full ${
-  //             user ? '' : 'hidden'
-  //           }`}
-  //         >
-  //           {item.numberCart}
-  //         </span>
-  //       )}
-  //     </div>
-
-  //     <NavLink
-  //       to={`${item.path}`}
-  //       className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
-  //     >
-  //       {item.name}
-  //     </NavLink>
-  //   </li>
-  // ));
-  // ------------------ ///
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler = () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('listCart');
-    localStorage.removeItem('token');
-    dispatch(loginActions.ON_LOGOUT);
+  // check logged in user
+  const login = useSelector(loginSelector.isLogin);
+  let username = useSelector(loginSelector.username);
+  let [open, setOpen] = useState(true);
 
+  let number = useSelector(state => state.cart.numberCart);
+  const logoutHandler = () => {
+    dispatch(loginActions.ON_LOGOUT());
     navigate('/');
   };
 
-  const buttonClass = 'link link-hover focus:text-second';
-
-  const [windowSize, setWindowSize] = useState(768);
-  const [isOpenNavbar, setIsOpenNavbar] = useState(true);
-
-  // Responsive for Navbar
-  // useEffect(() => {
-  //   function handleWindowResize() {
-  //     setWindowSize(window.innerWidth);
-  //   }
-  //   window.addEventListener('resize', handleWindowResize);
-  //   // for screen tablet , laptop
-  //   if (windowSize >= 768) setIsOpenNavbar(true);
-  //   else setIsOpenNavbar(false);
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleWindowResize);
-  //   };
-  // }, [windowSize]);
-  // const toggleNavbar = () => {
-  //   setIsOpenNavbar(pre => !pre);
-  // };
-  // const linkClass = `flex flex-col items-start md:flex-row gap-4 md:text-lg md:opacity-1 ${
-  //   isOpenNavbar ? '' : 'hidden'
-  // }`;
-  // Responsive for Navbar --end--
   const nameWeb = 'Boutique';
   const homeLink = (
     <li className={`${style.flexCenter} gap-2`}>
-      <NavLink
-        to='/'
-        className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
-      >
+      <NavLink to='/' className={style.navLink}>
         Home
       </NavLink>
     </li>
   );
   const shopLink = (
     <li className={`${style.flexCenter} gap-2`}>
-      <NavLink
-        to='/shop'
-        className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
-      >
+      <NavLink to='/shop' className={style.navLink}>
         Shop
       </NavLink>
     </li>
@@ -130,23 +48,21 @@ const Navbar = () => {
             {number ? number : 0}
           </span>
         </div>
+        {/* hover CartLink show cart */}
         {login && (
-          <div
-            className={`${style.tooltipItem} w-[400px] translate-x-[10%] translate-y-[12%]`}
-          >
-            <ListCart />
-            <button
-              className='mt-5 btn btn-warning border-none w-full'
-              onClick={() => navigate('/cart')}
-            >
-              Go to cart
-            </button>
+          <div className={`${style.tooltipItem} w-[400px] `}>
+            <div className='p-3 bg-stone-100'>
+              <ListCartNavbar />
+              <button
+                className='mt-5 btn btn-warning border-none w-full'
+                onClick={() => navigate('/cart')}
+              >
+                Go to cart
+              </button>
+            </div>
           </div>
         )}
-        <NavLink
-          to={login ? '/cart' : '/register'}
-          className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
-        >
+        <NavLink to={login ? '/cart' : '/login'} className={style.navLink}>
           Cart
         </NavLink>
       </li>
@@ -157,25 +73,30 @@ const Navbar = () => {
       <div className=' gap-2 '>
         <FaUserAlt />
       </div>
+      {/* hover loginLink show more */}
       {login && (
-        <div className={`${style.tooltipItem} w-[130px] translate-y-[50%]`}>
-          <div
-            className='hover:text-primary cursor-pointer'
-            onClick={logoutHandler}
-          >
-            Logout
-          </div>
+        <div className={`${style.tooltipItem} w-[130px]`}>
+          <ul className='p-3 bg-stone-100'>
+            <li
+              className='hover:text-orange-500 cursor-pointer pb-2 text-center '
+              onClick={() => navigate('/setting')}
+            >
+              Setting
+            </li>
+            <li
+              className='hover:text-orange-500 cursor-pointer pb-2 text-center '
+              onClick={logoutHandler}
+            >
+              Logout
+            </li>
+          </ul>
         </div>
       )}
-      <NavLink
-        to='/register'
-        className={({ isActive }) => (isActive ? 'text-orange-400' : '')}
-      >
-        {username}
+      <NavLink to={login ? '/setting' : '/register'} className={style.navLink}>
+        {login ? username : 'Login'}
       </NavLink>
     </li>
   );
-  let [open, setOpen] = useState(false);
   return (
     <>
       <nav className={`fixed w-full top-0 left-0 z-1000 relative`}>
@@ -186,19 +107,19 @@ const Navbar = () => {
             <Link to='/'>
               <h1>{nameWeb}</h1>
             </Link>
-            <p>Serach</p>
+            {/* //! Search ??     */}
           </div>
           <div
             onClick={() => setOpen(!open)}
             className='text-3xl absolute right-8 top-6 cursor-pointer md:hidden'
           >
             <ion-icon name={open ? 'close' : 'menu'}>
-              <FaCaretDown />
+              <FaBars />
             </ion-icon>
           </div>
 
           <ul
-            className={`flex flex-col md:flex md:flex-row  gap-6  ${
+            className={`flex flex-col items-start md:flex md:flex-row  gap-6  ${
               style.padding
             } ${open ? 'hidden' : ''} `}
           >

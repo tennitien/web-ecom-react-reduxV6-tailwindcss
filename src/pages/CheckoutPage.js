@@ -1,8 +1,9 @@
 import React from 'react';
+import { layout } from '../style';
 import { useSelector } from 'react-redux';
 
 import { Header } from '../components';
-import { Button, ContainerColumn, TotalBox, PriceChange } from '../UI';
+import { Button, PriceChange } from '../UI';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -46,7 +47,7 @@ const CheckoutPage = () => {
 
         <article id='checkout'>
           <h3>BILLING DETAILS</h3>
-          <ContainerColumn>
+          <div className={`${layout.containerCart}`}>
             {/* TODO: BILLING DETAILS */}
             <form action='' onSubmit={formik.handleSubmit} className='w-full'>
               <div className='form-control flex flex-col gap-2 mt-4 '>
@@ -113,7 +114,7 @@ const CheckoutPage = () => {
               </div>
             </form>
             {/* TODO: YOUR ORDER*/}
-            <TotalBox>
+            <div className={`${layout.boxCart}`}>
               <h3>YOUR ORDER</h3>
               {/* list cart */}
               {listCart &&
@@ -133,8 +134,8 @@ const CheckoutPage = () => {
                   <PriceChange price={totalCart} /> VND
                 </span>
               </p>
-            </TotalBox>
-          </ContainerColumn>
+            </div>
+          </div>
         </article>
       </section>
     </>

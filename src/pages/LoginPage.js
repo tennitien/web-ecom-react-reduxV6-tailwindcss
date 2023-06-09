@@ -1,14 +1,14 @@
 import React from 'react';
 
 import SignIn from '../components/SignIn';
-import ImgBg from '../UI/ImgBg';
+import SignBackground from '../UI/SignBackground';
 
 const LoginPage = () => {
   return (
     <>
-      <ImgBg>
+      <SignBackground>
         <SignIn />
-      </ImgBg>
+      </SignBackground>
     </>
   );
 };

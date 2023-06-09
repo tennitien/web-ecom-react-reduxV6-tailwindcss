@@ -6,7 +6,7 @@ import { cartActions } from '../store/cartSlice';
 import { productListActions } from '../store/productListSlice';
 
 import styles from '../style';
-import { loginActions, loginSelector } from '../store/loginSlice';
+import { loginActions } from '../store/loginSlice';
 const Root = () => {
   const dispatch = useDispatch();
   const data = useLoaderData();
@@ -21,14 +21,11 @@ const Root = () => {
     dispatch(productListActions.setProduct(data));
     if (checkStore()) {
       dispatch(cartActions.GET_CART());
-      dispatch(loginActions.ON_LOGIN);
-      console.log(1463847);
+      dispatch(loginActions.ON_LOGIN());
     }
   }, []);
 
   //
-  const [user, setUser] = useState(null);
-
   return (
     <>
       <main>

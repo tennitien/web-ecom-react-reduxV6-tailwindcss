@@ -1,15 +1,13 @@
 import SignUpForm from '../components/SignUpForm';
-import ImgBg from '../UI/ImgBg';
+import SignBackground from '../UI/SignBackground';
 
 const RegisterPage = () => {
   return (
     <>
       <section id='register'>
-        <ImgBg>
+        <SignBackground>
           <SignUpForm />
-        </ImgBg>
-
-        {/*  */}
+        </SignBackground>
       </section>
     </>
   );

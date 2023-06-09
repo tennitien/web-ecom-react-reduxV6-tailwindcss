@@ -1,4 +1,3 @@
-import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import {
   CartPage,
@@ -10,6 +9,7 @@ import {
   RegisterPage,
   Root,
   ShopPage,
+  Setting,
 } from './pages';
 
 import { loader as rootLoader } from './pages/Root';
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
       { path: 'checkout', element: <CheckoutPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'register', element: <RegisterPage /> },
+      { path: 'setting', element: <Setting /> },
     ],
   },
 ]);

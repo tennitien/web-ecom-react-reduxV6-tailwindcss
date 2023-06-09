@@ -2,7 +2,7 @@ import React from 'react';
 
 import bannerImg from '../asset/banner1.jpg';
 
-const ImgBg = props => {
+const SignBackground = props => {
   return (
     <>
       <section
@@ -15,4 +15,4 @@ const ImgBg = props => {
     </>
   );
 };
-export default ImgBg;
+export default SignBackground;

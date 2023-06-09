@@ -27,8 +27,9 @@ const SignUpForm = () => {
     //
     onSubmit: async values => {
       const checkEmail = await checkEmailRegistered(values.email);
-      console.log(checkEmail);
       // If Email already exists
+      if (checkEmail) return null;
+
       await createUser(values.user, values.email, values.password);
       navigate('/login');
     },

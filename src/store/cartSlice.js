@@ -25,6 +25,7 @@ const cartSlice = createSlice({
     },
     ADD_CART(state, action) {
       const newItem = action.payload;
+
       setLocalStorage('listCart', newItem);
       state.listCart = getFromStorage('listCart');
       state.totalCart = state.listCart.reduce(

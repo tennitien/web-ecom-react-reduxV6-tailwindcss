@@ -88,6 +88,7 @@ const DetailPage = () => {
               </div>
             </div>
           </div>
+
           <div className='mt-6 mb-9  flex flex-col items-start gap-3'>
             <Button>DESCRIPTION</Button>
             <h3>PRODUCT DESCRIPTION</h3>
@@ -97,7 +98,7 @@ const DetailPage = () => {
               ))}
             </div>
           </div>
-          <div className=''>
+          <div className='relative'>
             <h3>RELATED PRODUCTS</h3>
             <div className='grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-4'>
               {relatedProducts.map((item, index) => (

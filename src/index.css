@@ -34,6 +34,7 @@ html {
     @apply flex justify-around items-center;
   }
 }
+
 @layer base {
   h1 {
     @apply text-4xl;
@@ -47,9 +48,11 @@ html {
   li {
     @apply list-none;
   }
+  input[type='number']::-webkit-outer-spin-button,
   input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
+  input[type='number'] {
     -webkit-appearance: none;
     margin: 0;
+    -moz-appearance: textfield !important;
   }
 }

@@ -3,23 +3,26 @@ export function getFromStorage(key) {
 }
 
 export const setLocalStorage = (key, value) => {
-  let getDataStorage = getFromStorage(key) ? getFromStorage(key) : [];
+  let dataStorage = getFromStorage(key) ? getFromStorage(key) : [];
   let newArr = [];
   if (key === 'listCart') {
     // find Index in Arr
-    let findIndex = getDataStorage.findIndex(item => item.id === value.id);
+    let findIndex = dataStorage.findIndex(item => item.id === value.id);
     // If don't have : push
+    let exitsItem;
     if (findIndex < 0) {
-      newArr = [...getDataStorage, value];
+      newArr = [...dataStorage, value];
       // If have: change
     } else {
-      getDataStorage[findIndex] = value;
-      newArr = getDataStorage;
+      exitsItem = dataStorage[findIndex];
+      let newQuantity = parseInt(exitsItem.quantity) + value.quantity;
+      exitsItem.quantity = newQuantity;
+
+      dataStorage[findIndex] = exitsItem;
+      newArr = dataStorage;
     }
-  }
-  // Other not Cart
-  else {
-    newArr = [...getDataStorage, value];
+  } else {
+    newArr = [...dataStorage, value];
   }
   // Finally
   localStorage.setItem(key, JSON.stringify(newArr));

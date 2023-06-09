@@ -19,7 +19,6 @@ export const checkEmailRegistered = async email => {
       checkEmail = true;
     } else {
       // Email chưa được đăng ký
-      console.log('Email chưa được đăng ký');
       checkEmail = false;
     }
   } catch (error) {
@@ -48,15 +47,19 @@ export const createUser = async (user, email, password) => {
 };
 
 export const loginUser = async (email, password) => {
+  let login;
   try {
     await await signInWithEmailAndPassword(auth, email, password);
-    alert('Đăng nhập thành công');
 
     await setTokenStore();
-    getUser();
-  } catch (error) {
-    throw new Error(error.message);
+    login = true;
+    alert('Đăng nhập thành công');
+  } catch (err) {
+    login = false;
+    alert('Email or password is not correct');
+    throw new Error(err.message);
   }
+  return login;
 };
 export async function logoutUser() {
   try {
@@ -98,14 +101,28 @@ export const setTokenStore = async () => {
     localStorage.setItem('token', token);
   }
 };
-const getUser = onAuthStateChanged(auth, user => {
+export const setUserInfoStore = onAuthStateChanged(auth, user => {
   if (user) {
     // Người dùng đã đăng nhập
     const username = JSON.stringify(user.displayName);
     localStorage.setItem('username', username);
+
+    const email = JSON.stringify(user.email);
+    localStorage.setItem('email', email);
   } else {
     // Người dùng chưa đăng nhập
     console.log('Người dùng chưa đăng nhập');
     return null;
   }
 });
+
+export const updateUserName = newUsername => {
+  const user = auth.currentUser;
+  updateProfile(user, { displayName: newUsername })
+    .then(() => {
+      alert('Cập nhật username thành công');
+    })
+    .catch(error => {
+      console.log('Lỗi khi cập nhật username:', error);
+    });
+};

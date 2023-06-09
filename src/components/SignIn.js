@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../auth/auth';
-import { loginActions } from '../store/loginSlice';
+import { loginUser, setUserInfoStore } from '../auth/auth';
+import { loginActions, loginSelector } from '../store/loginSlice';
 import { cartSelector } from '../store/cartSlice';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../auth/firebase';
+
 // ------------------ //
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const listCart = useSelector(cartSelector.listCart);
-
+  const login = useSelector(loginSelector.isLogin);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,13 +27,18 @@ const SignIn = () => {
     }),
 
     onSubmit: async values => {
-      await loginUser(values.email, values.password);
+      const isLogin = await loginUser(values.email, values.password);
 
       // get value for cart
-      localStorage.setItem('listCart', JSON.stringify(listCart));
-      dispatch(loginActions.ON_LOGIN);
-      navigate('/');
-
+      console.log(isLogin);
+      if (isLogin) {
+        // save list cart & username to localStorage
+        localStorage.setItem('listCart', JSON.stringify(listCart));
+        setUserInfoStore();
+        // action : loginSlice
+        dispatch(loginActions.ON_LOGIN());
+        navigate('/');
+      }
       formik.resetForm();
     },
   });
@@ -76,13 +84,14 @@ const SignIn = () => {
         </div>
 
         <Button className='w-full mt-4'>Sign in</Button>
-
-        <p className='text-gray-500 italic text-center mt-8'>
-          Create an account?
-          <span className='text-blue-600'>
-            <Link to={'/register'}> Sign-up</Link>
-          </span>
-        </p>
+        {!login && (
+          <p className='text-gray-500 italic text-center mt-8'>
+            Create an account?
+            <span className='text-blue-600'>
+              <Link to={'/register'}> Sign-up</Link>
+            </span>
+          </p>
+        )}
       </form>
     </>
   );

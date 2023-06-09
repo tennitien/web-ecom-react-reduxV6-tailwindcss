@@ -26,7 +26,7 @@ const Footer = () => {
   ];
   return (
     <>
-      <footer className='bg-neutral-800'>
+      <footer className='bg-neutral-800 '>
         <div className='container footer p-10 text-neutral-content italic grid grid-cols-2 md:grid-cols-3'>
           {footerLinks &&
             footerLinks.map((link, index) => (

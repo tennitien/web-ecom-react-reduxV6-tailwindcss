@@ -1,11 +1,5 @@
 const styles = {
   boxContainer: 'md:max-w-5xl mx-auto',
-
-  heading2:
-    'font-poppins font-semibold xs:text-[48px] text-[40px] text-white xs:leading-[76.8px] leading-[66.8px] w-full',
-  paragraph:
-    'font-poppins font-normal text-dimWhite text-[18px] leading-[30.8px]',
-
   flexCenter: 'flex justify-center items-center',
   flexStart: 'flex justify-start items-center',
   flexBetween: 'flex justify-between items-center',
@@ -19,35 +13,18 @@ const styles = {
 
   tooltipContainer: 'group relative',
   tooltipItem:
-    'hidden group-hover:block absolute top-0 right-0  p-3 bg-white font-bold shadow-lg',
+    'hidden group-hover:block absolute top-0 right-0 translate-y-5 bg-transparent pt-3 bg-white font-bold shadow-lg ',
 
   input:
     'border border-gray-300 text-gray-900 text-sm  focus:ring-red-400 focus:border-red-400 block w-full p-4',
+  navLink: ({ isActive }) => (isActive ? 'text-orange-400' : ''),
 };
 
-/*
-.tooltip {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  border-radius: 5px;
-  display: none;
-}
-
-*/
-
 export const layout = {
-  section: `flex md:flex-row flex-col ${styles.paddingY}`,
-  sectionReverse: `flex md:flex-row flex-col-reverse ${styles.paddingY}`,
-
-  sectionImgReverse: `flex-1 flex ${styles.flexCenter} md:mr-10 mr-0 md:mt-0 mt-10 relative`,
-  sectionImg: `flex-1 flex ${styles.flexCenter} md:ml-10 ml-0 md:mt-0 mt-10 relative`,
-
-  sectionInfo: `flex-1 ${styles.flexStart} flex-col`,
+  containerCart:
+    'grid md:grid-cols-1 lg:grid-cols-[2.5fr_1.5fr] lg:place-items-start gap-4',
+  boxCart:
+    'bg-bgPrimary italic p-6 flex flex-col justify-between w-fit md:w-full gap-3',
 };
 
 export default styles;

@@ -1,38 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { layout } from '../style';
 import { cartActions } from '../store/cartSlice';
 
 import { Header, QuantityForm } from '../components';
 
-import { Button, PriceChange, ContainerColumn, TotalBox } from '../UI';
+import { Button, PriceChange } from '../UI';
 
 import { RiDeleteBin5Line, RiGiftLine } from 'react-icons/ri';
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa';
-import ListCart from '../components/ListCart';
+import { loginSelector } from '../store/loginSlice';
 
 // ------------------ ///
 const CartPage = () => {
   const dispatch = useDispatch();
   // check login
-  const user = JSON.parse(localStorage.getItem('user'));
+  const login = useSelector(loginSelector.isLogin);
 
   // get state from redux
   const listCart = useSelector(state => state.cart.listCart);
   const totalCart = useSelector(state => state.cart.totalCart);
-  console.log(listCart);
   const getQuantity = quantity => {};
 
   return (
     <>
       <section id='cart' className='container italic'>
         <Header title='cart' children='cart' />
-        <ListCart />
-        {user && (
+        {login && (
           <div id='cart'>
             <h3 className='my-4'>SHOPPING CART</h3>
-            <ContainerColumn>
+            <div className={`${layout.containerCart}`}>
               <div>
                 <div className='grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr] gap-4 items-center justify-items-center italic bg-bgPrimary md:p-2 lg:p-4'>
                   <p>IMAGE</p>
@@ -102,7 +100,7 @@ const CartPage = () => {
               </div>
 
               {/* TOTAL CART */}
-              <TotalBox>
+              <div className={`${layout.boxCart}`}>
                 <h3>CART TOTAL</h3>
                 <p className='flex-b-c border-b border-gray-400'>
                   <span className='font-semibold text-sm'>SUBTOTAL</span>
@@ -124,8 +122,8 @@ const CartPage = () => {
                     Apply coupon
                   </Button>
                 </form>
-              </TotalBox>
-            </ContainerColumn>
+              </div>
+            </div>
           </div>
         )}
       </section>
