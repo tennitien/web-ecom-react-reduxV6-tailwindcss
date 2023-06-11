@@ -5,6 +5,7 @@ import {
   fetchSignInMethodsForEmail,
   onAuthStateChanged,
   updateProfile,
+  updatePassword,
 } from '@firebase/auth';
 
 export const checkEmailRegistered = async email => {
@@ -71,16 +72,29 @@ export async function logoutUser() {
 }
 
 // ! chua dung duoc
-export const changePassword = async newPassword => {
-  try {
-    const user = await auth.currentUser;
-    await user.updatePassword(newPassword);
-    alert('Đổi mật khẩu thành công');
-  } catch (error) {
-    alert('Đổi mật khẩu thất bại:', error);
-    throw error;
-  }
-};
+export function changePassword(newPassword) {
+  const user = auth.currentUser;
+
+  updatePassword(user, newPassword)
+    .then(() => {
+      alert('Mật khẩu đã được thay đổi thành công');
+    })
+    .catch(error => {
+      alert('Đã xảy ra lỗi khi thay đổi mật khẩu: ', error);
+    });
+}
+// Cập nhật tên người dùng
+export function updateUserName(newName) {
+  const user = auth.currentUser;
+
+  updateProfile(user, { displayName: newName })
+    .then(() => {
+      alert('Tên người dùng đã được cập nhật thành công');
+    })
+    .catch(error => {
+      alert('Đã xảy ra lỗi khi cập nhật tên người dùng: ', error);
+    });
+}
 
 export const getAuthToken = async () => {
   try {
@@ -115,14 +129,3 @@ export const setUserInfoStore = onAuthStateChanged(auth, user => {
     return null;
   }
 });
-
-export const updateUserName = newUsername => {
-  const user = auth.currentUser;
-  updateProfile(user, { displayName: newUsername })
-    .then(() => {
-      alert('Cập nhật username thành công');
-    })
-    .catch(error => {
-      console.log('Lỗi khi cập nhật username:', error);
-    });
-};

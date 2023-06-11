@@ -37,7 +37,7 @@ const Navbar = () => {
   );
   const cartLink = (
     <>
-      <li className={`${style.flexCenter} gap-2 ${style.tooltipContainer}`}>
+      <li className={`${style.flexCenter} gap-2 md:${style.tooltipContainer}`}>
         <div className=' gap-2 relative'>
           <FaShoppingCart />
           <span
@@ -50,7 +50,7 @@ const Navbar = () => {
         </div>
         {/* hover CartLink show cart */}
         {login && (
-          <div className={`${style.tooltipItem} w-[400px] `}>
+          <div className={`md:${style.tooltipItem} w-[400px]`}>
             <div className='p-3 bg-stone-100'>
               <ListCartNavbar />
               <button
@@ -118,8 +118,9 @@ const Navbar = () => {
             </ion-icon>
           </div>
 
+          {/* list navbar */}
           <ul
-            className={`flex flex-col items-start md:flex md:flex-row  gap-6  ${
+            className={`flex justify-end md:flex md:flex-row  gap-6  ${
               style.padding
             } ${open ? 'hidden' : ''} `}
           >

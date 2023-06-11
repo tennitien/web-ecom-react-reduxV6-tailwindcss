@@ -4,15 +4,10 @@ import SignBackground from '../UI/SignBackground';
 import { Button } from 'react-daisyui';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
-import { loginSelector } from '../store/loginSlice';
 import { useNavigate } from 'react-router';
-import SignIn from '../components/SignIn';
+import { updateUserName } from '../auth/auth';
 
 const Setting = () => {
-  const login = useSelector(loginSelector.isLogin);
-  const username = useSelector(loginSelector.username);
-  const [newUsername, setNewUsername] = useState(null);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -24,16 +19,11 @@ const Setting = () => {
     }),
 
     onSubmit: values => {
-      setNewUsername(values.user);
-      navigate('/login');
+      updateUserName(values.user);
+      localStorage.setItem('username', JSON.stringify(values.user));
+      navigate('/');
     },
   });
-  useEffect(() => {
-    let newUsername = {
-      user: username,
-    };
-    formik.setValues(newUsername);
-  }, []);
   const inputClass =
     'border border-gray-300 text-gray-900 text-sm  focus:ring-red-400 focus:border-red-400 block w-full p-4';
   return (
@@ -50,6 +40,7 @@ const Setting = () => {
               type='text'
               id='user'
               name='user'
+              placeholder='New username'
               className={inputClass}
               onChange={formik.handleChange}
               value={formik.values.user}
@@ -59,7 +50,9 @@ const Setting = () => {
               <p className='text-red-500 py-3'> {formik.errors.user} </p>
             )}
           </div>
-          <Button className='w-full mt-4'>Update</Button>
+          <Button type='submit' className='w-full mt-4'>
+            Update
+          </Button>
         </form>
       </SignBackground>
     </section>

@@ -13,7 +13,7 @@ const styles = {
 
   tooltipContainer: 'group relative',
   tooltipItem:
-    'hidden group-hover:block absolute top-0 right-0 translate-y-5 bg-transparent pt-3 bg-white font-bold shadow-lg ',
+    'group-hover:block hidden absolute top-0 right-0 translate-y-5 bg-transparent pt-3 bg-white font-bold shadow-lg ',
 
   input:
     'border border-gray-300 text-gray-900 text-sm  focus:ring-red-400 focus:border-red-400 block w-full p-4',

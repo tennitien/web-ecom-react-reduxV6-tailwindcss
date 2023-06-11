@@ -30,7 +30,6 @@ const SignIn = () => {
       const isLogin = await loginUser(values.email, values.password);
 
       // get value for cart
-      console.log(isLogin);
       if (isLogin) {
         // save list cart & username to localStorage
         localStorage.setItem('listCart', JSON.stringify(listCart));

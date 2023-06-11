@@ -13,21 +13,22 @@ const SidleBar = () => {
   // open close for mobile
   const [windowSize, setWindowSize] = useState(768);
   const [isOpen, setIsOpen] = useState(true);
+  // let [open, setOpen] = useState(true);
 
   // Responsive
-  useEffect(() => {
-    function handleWindowResize() {
-      setWindowSize(window.innerWidth);
-    }
-    window.addEventListener('resize', handleWindowResize);
-    // for screen tablet , laptop
-    if (windowSize >= 768) setIsOpen(true);
-    else setIsOpen(false);
+  // useEffect(() => {
+  //   function handleWindowResize() {
+  //     setWindowSize(window.innerWidth);
+  //   }
+  //   window.addEventListener('resize', handleWindowResize);
+  //   // for screen tablet , laptop
+  //   if (windowSize >= 768) setIsOpen(true);
+  //   else setIsOpen(false);
 
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, [windowSize]);
+  //   return () => {
+  //     window.removeEventListener('resize', handleWindowResize);
+  //   };
+  // }, [windowSize]);
 
   const toggleSidleBar = () => {
     setIsOpen(!isOpen);
@@ -41,7 +42,7 @@ const SidleBar = () => {
       >
         Categories
       </div>
-      <div className={`${isOpen ? '' : 'hidden'}`}>
+      <div className={`${isOpen ? 'hidden' : ''}`}>
         <p className='title uppercase bg-black text-gray-300 p-3'>apple</p>
         <div className='p-3'>
           <button
