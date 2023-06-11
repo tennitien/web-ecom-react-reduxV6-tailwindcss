@@ -1,6 +1,6 @@
 # Website commerce
 
-Link Demo: https://react-auth-demo-78a39.web.app/
+Link Demo: https://web-commercial-reactjs.netlify.app/
 
 ## Build with
 
@@ -24,6 +24,6 @@ Link Demo: https://react-auth-demo-78a39.web.app/
 
 ### After Deploy
 
-https://react-auth-demo-78a39.web.app/
+https://web-commercial-reactjs.netlify.app/
 
-https://eloquent-yeot-69aaf1.netlify.app/
+https://react-auth-demo-78a39.web.app/
