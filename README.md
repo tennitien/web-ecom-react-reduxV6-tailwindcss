@@ -1,5 +1,7 @@
 # Website commerce
 
+Link Demo: https://react-auth-demo-78a39.web.app/
+
 ## Build with
 
 - [Create React App]()
@@ -9,9 +11,19 @@
 - [daisyui]()
 - [yup]()
 - [formik]()
+- [Authentication with firebase]()
 
-## Deploy https://app.netlify.com
+## Review
+
+![HomePage](/img/HomePage.png)
+![Shop](/img/Shop.png)
+![Cart](/img/Cart.png)
+![SignIn](/img/SignIn.png)
+
+## Deploy Netfily && Firebase
 
 ### After Deploy
+
+https://react-auth-demo-78a39.web.app/
 
 https://eloquent-yeot-69aaf1.netlify.app/
