@@ -42,7 +42,7 @@ const SidleBar = () => {
       >
         Categories
       </div>
-      <div className={`${isOpen ? 'hidden' : ''}`}>
+      <div className={`${isOpen ? 'hidden' : ''}  md:block`}>
         <p className='title uppercase bg-black text-gray-300 p-3'>apple</p>
         <div className='p-3'>
           <button
